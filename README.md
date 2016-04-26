@@ -25,7 +25,7 @@ likely we will not want to grant all privilages on all the schemas. A schema
 is a directory of tables within a database. Instead you could create a schema 
 for the user and then grant privilages only within that schema like this:
 
-    CREATE DATABASE dbname;
+    mysql> CREATE DATABASE dbname;
 
 Then you can grant privilages to that database like this:
 
@@ -34,7 +34,7 @@ Then you can grant privilages to that database like this:
         ->     WITH GRANT OPTION;
 
 - Instead of using the MySQL Command Line interface, it may be easier to download
-the MySQL workbench IDE from the internet and use this tool to run the same commands. This tool has many other features that may be helpful in database management. For instance, it is very easy to test SQL statements. 
+the MySQL workbench IDE from the internet and use this tool to run the same commands. This tool has many other features that may be helpful in database management. For instance, it is very easy to test SQL statements. Here is the link to download the application: [mysql workbench](https://dev.mysql.com/downloads/workbench/) 
     - to create a connection to the database from the MySQL workbench, you will 
     enter the host: "fubini.swarthmore.edu" and you can use port "3306", which 
     is the default. 
@@ -43,10 +43,15 @@ the MySQL workbench IDE from the internet and use this tool to run the same comm
 - Many programing languages have libraries to estabilish a connection with MySQL
 and execute SQL statements. I will breifly explane some usefull parts of the 
 python library. You will need to isntall the python package manager (pip) on 
-the machine you are using if it is not already.
+the machine you are using if it is not already. This may be helpful if you are
+using a raspberry pi with an internet connection to sumbit data from the GPIO pins
+to a SQL database. 
+
 - Install MySQL-python
 
-    sudo pip install MySQL-python
+'''
+sudo pip install MySQL-python
+'''
 
 - Establishing a connection: place the following code at the top of a 
     python script.
