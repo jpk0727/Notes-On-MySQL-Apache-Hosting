@@ -58,6 +58,7 @@ the machine you are using if it is not already.
     cur = db.cursor()
 ```
     - Execute a simple select statement.
+
 ```python
     sql = "select * from dbname.table"
     num_rows = cur.execute(sql)
@@ -65,6 +66,7 @@ the machine you are using if it is not already.
         data= cur.fetchall()
 ```
     - Execute a simple insert statement
+
 ```python
     sql = "insert into dbname.table (var1, var2) values (%(var1)s,%(var2))"
     values = {
@@ -75,9 +77,128 @@ the machine you are using if it is not already.
     db.commit()
 ```
     - close database connection when done
+
 ```python
     db.close()
 ```
+
+## DJANG WEB APPLICTION ##
+Django is a framework for creating web applications that uses mostly the python language. This framework
+has good documentation, easily interfaces with any database, and is fairly streight forward. 
+The easiest way to start a django project is by using one of the many django start templates.
+I recommend choosing a simple django skeleton because the more complicated starter templates
+are designed for much larger scale applications than what most Swarthmore projects will be using.
+Here is a link to the starter project that I used. [django-starter-template](https://github.com/fasouto/django-starter-template)
+
+The only complication with using this django template is that it requires python 2.7, which most OS
+use. However, the centOS server does not natively run python 2.7, so I will show you how to work
+around this later in the Apache section. 
+
+### DJANGO MODELS ###
+Once the database is set up properly by simply entering the connection information into the development.py 
+settings file, you can start using the models. The following is the syntax to be used in the database connection
+settings.
+
+```python
+TABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'dbname',                      # Or path to database file if using sqlite3.
+        'USER': 'username',                      # Not used with sqlite3.
+        'PASSWORD': 'password',                  # Not used with sqlite3.
+        'HOST': '130.58.84.237',                      # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '3306',                      # Set to empty string for default. Not used with sqlite3.
+    }
+```
+
+Models are used as an interface between SQL and your web application. You should create models for db tables that
+are used in the webapp. Here is an example of a simple model, which would be placed in the /apps/base/models.py file
+
+```python
+from django.db import models
+
+class students(models.Model):
+    name = models.CharField()
+    class_yr = models.IntegerField()
+```
+
+This created a model for a table that will hold information about a student, including the name and class year.
+Now return to the base directory for the django project and run the following commands to create the tables
+in the database. 
+
+```
+>> python manage.py makemigrations
+>> python manage.py migrate
+```
+
+This will take the model that you created, turn it into SQL and exectue the command over the database connection.
+You can interface with these models in the views.py to send data to html pages, and have website users send data
+back to the database using a ModelForm. In other words, the models are a layer between the database and the web 
+application
+
+## APACHE and Serving the Web App ##
+
+Fortunately, using the Django starter template already prepares the web application to be served using mod_wsgi.
+The first steps in serving the website are creating a virtual environment on the CentOS server that will
+contain all the dependencies for the web application. To create a new environment run the following command
+on the server.
+
+```>> virtualenv projectname
+```
+
+cd into the newly created folder and then activate the shell for the environment. This will allow you to install
+dependencies into the environment without them also installed on the rest of the machine. Interesting but importantly,
+the fubini server is already a virtual server, so we are creating a virtual environment on a virtual server. Before we
+activate the virtual shell, however, we must make sure we are first using the python 2.7 which is required for 
+the Django application. 
+
+```
+>> scl enable python27 bash
+>> python -V
+```
+If the last command shows python 2.7 then you are now using the correct version.
+```
+>> source /bin/activate
+```
+Now clone you Django webapp repo from github and install all the required dependenices. (This is assuming
+you developed the web app on another computer and saved the code to a github accound). I had trouble
+using the swarthmore github, so I used a private account. 
+
+To set up my httpd django configuration, I added the fallowing to the django.conf file in the 
+httpd config folder
+
+```
+alias /static /home/jess/growEnv/growApp/grow/static
+<Directory /home/jess/growEnv/growApp/grow/static>
+    order allow,deny
+    allow from all
+</Directory>
+
+<Directory /home/jess/growEnv/growApp/grow>
+    <Files wsgi.py>
+        order allow,deny
+        allow from all
+    </Files>
+</Directory>
+
+WSGIDaemonProcess grow python-path=/home/jess/growEnv/growApp:/home/jess/growEnv/lib/python2.7/site-packages
+WSGIProcessGroup grow
+WSGIScriptAlias /grow /home/jess/growEnv/growApp/grow/wsgi.py
+WSGISocketPrefix /var/run/wsgi
+```
+
+You may need to modify or add to this for a different Django project. Notice, we are not using the native python library,
+but the python library that is installed within the virtual env. 
+
+The following link is a tutorial on how to host a djanog application using apache, but it is not specific to CentOS, and 
+does not assume a project has already been created [link to tutorial](https://www.digitalocean.com/community/tutorials/how-to-serve-django-applications-with-apache-and-mod_wsgi-on-ubuntu-14-04)
+
+
+
+                                
+
+
+
 
 
 
