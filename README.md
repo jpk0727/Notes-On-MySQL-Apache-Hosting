@@ -49,7 +49,6 @@ the machine you are using if it is not already.
 
     - Establishing a connection: place the following code at the top of a 
     python script.
-
 ```python
     db = MySQLdb.connect(host="fubini.swarthmore.edu",
             port = 3306,
@@ -58,18 +57,14 @@ the machine you are using if it is not already.
         db="grow")
     cur = db.cursor()
 ```
-
     - Execute a simple select statement.
-
 ```python
     sql = "select * from dbname.table"
     num_rows = cur.execute(sql)
     if (num_rows > 0):
         data= cur.fetchall()
 ```
-
     - Execute a simple insert statement
-
 ```python
     sql = "insert into dbname.table (var1, var2) values (%(var1)s,%(var2))"
     values = {
@@ -79,9 +74,7 @@ the machine you are using if it is not already.
     cur.execute(sql, values)
     db.commit()
 ```
-
     - close database connection when done
-
 ```python
     db.close()
 ```
