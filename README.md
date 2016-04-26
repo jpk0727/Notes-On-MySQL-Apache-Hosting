@@ -6,13 +6,17 @@ This repository is to hold notes for the Swarthmore Department of Engineering on
 - Start mysql from command line. Either an existing user or the root account can
 execute this command. -u flag is followed by username (in this case root) and -p flag will prompt for a password
 
+```
     mysql -u root -p
+```
 
 - Then, once a MySQL command line is reached, create a username with permisions for the person that wishes to use the database. 
 
+```
     mysql> CREATE USER 'monty'@'%' IDENTIFIED BY 'some_pass';
     mysql> GRANT ALL PRIVILEGES ON *.* TO 'monty'@'%'
         ->     WITH GRANT OPTION;
+```
 
 This statement will create a user 'monty' with password 'some_pass' that has 
 all privilages on all schemas. This is not exactly perferable because 
@@ -46,22 +50,27 @@ the machine you are using if it is not already.
     - Establishing a connection: place the following code at the top of a 
     python script.
 
+```python
     db = MySQLdb.connect(host="fubini.swarthmore.edu",
             port = 3306,
             user="jess",
             passwd="aeroponic_growth",
         db="grow")
     cur = db.cursor()
+```
 
     - Execute a simple select statement.
 
+```python
     sql = "select * from dbname.table"
     num_rows = cur.execute(sql)
     if (num_rows > 0):
         data= cur.fetchall()
+```
 
     - Execute a simple insert statement
 
+```python
     sql = "insert into dbname.table (var1, var2) values (%(var1)s,%(var2))"
     values = {
         'var1': var1
@@ -69,11 +78,13 @@ the machine you are using if it is not already.
     }
     cur.execute(sql, values)
     db.commit()
+```
 
     - close database connection when done
 
+```python
     db.close()
-    
+```
 
 
 
