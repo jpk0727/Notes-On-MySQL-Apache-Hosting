@@ -1,6 +1,6 @@
 # Notes-On-MySQL-Apache-Hosting
 
-This repository is to hold notes for the Swarthmore Department of Engineering on how to use the CentOS server to host a database and serve a web application suing Apache. This project was created by Jess Karol after he figured out how to use these tools for their E90. Feel free to contribute more instructions to this page to 
+This repository is to hold notes for the Swarthmore Department of Engineering on how to use the CentOS server to host a database and serve a web application using Apache. This project was created by Jess Karol after he figured out how to use these tools for their E90. Feel free to contribute more instructions to this page to 
 record information so future engineers have an easier time. 
 
 ## MySQL ##
@@ -83,7 +83,7 @@ the machine you are using if it is not already.
     db.close()
 ```
 
-## DJANG WEB APPLICTION ##
+## DJANGO WEB APPLICTION ##
 Django is a framework for creating web applications that uses mostly the python language. This framework
 has good documentation, easily interfaces with any database, and is fairly streight forward. 
 The easiest way to start a django project is by using one of the many django start templates.
