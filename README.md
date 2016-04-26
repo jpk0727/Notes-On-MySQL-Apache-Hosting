@@ -91,14 +91,12 @@ I recommend choosing a simple django skeleton because the more complicated start
 are designed for much larger scale applications than what most Swarthmore projects will be using.
 Here is a link to the starter project that I used. [django-starter-template](https://github.com/fasouto/django-starter-template)
 
-The only complication with using this django template is that it requires python 2.7, which most OS
+The only complication with using django template is that it requires python 2.7, which most operating systems
 use. However, the centOS server does not natively run python 2.7, so I will show you how to work
 around this later in the Apache section. 
 
-### DJANGO MODELS ###
-Once the database is set up properly by simply entering the connection information into the development.py 
-settings file, you can start using the models. The following is the syntax to be used in the database connection
-settings.
+To tie your Django application to a database, add the following lines to the development.py 
+configuration file
 
 ```python
 TABASES = {
@@ -112,8 +110,20 @@ TABASES = {
     }
 ```
 
-Models are used as an interface between SQL and your web application. You should create models for db tables that
-are used in the webapp. Here is an example of a simple model, which would be placed in the /apps/base/models.py file
+- run the application to see if it is working by entering the following command into the terminal. Make sure
+you are in the project root directory that contains the manage.py file.
+
+    python manage.py runserver
+
+- You can now go to a browser and visit localhost:8000 to view the website. You are ready to develop the views
+and functionality you want. One important feature of django is the models, which is described below.
+### DJANGO MODELS ###
+
+Once the database is set up properly by simply entering the connection information into the development.py 
+settings file, you can start using the models to build the database. 
+
+Models are used as an interface between SQL and your web application. You should create models for db tables where
+the data is used on the website. Here is an example of a simple model, which would be placed in the /apps/base/models.py file
 
 ```python
 from django.db import models
@@ -123,7 +133,7 @@ class students(models.Model):
     class_yr = models.IntegerField()
 ```
 
-This created a model for a table that will hold information about a student, including the name and class year.
+This creates a model for a table that will hold information about a student, including the name and class year.
 Now return to the base directory for the django project and run the following commands to create the tables
 in the database. 
 
@@ -155,13 +165,14 @@ the Django application.
     scl enable python27 bash
     python -V
 
-If the last command shows python 2.7 then you are now using the correct version.
+If the last command shows python 2.7 then you are now using the correct python version.
 
     source /bin/activate
 
 Now clone you Django webapp repo from github and install all the required dependenices. (This is assuming
-you developed the web app on another computer and saved the code to a github accound). I had trouble
-using the swarthmore github, so I used a private account. 
+you developed the web app on another computer and saved the code to a github account). I had trouble
+using the swarthmore github, so I used a private account. This may include installing the python 2.7, which 
+will 
 
 To set up my httpd django configuration, I added the fallowing to the django.conf file in the 
 httpd config folder
