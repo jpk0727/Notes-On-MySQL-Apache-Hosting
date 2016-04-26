@@ -177,7 +177,7 @@ If the last command shows python 2.7 then you are now using the correct python v
 Now clone you Django webapp repo from github and install all the required dependenices. (This is assuming
 you developed the web app on another computer and saved the code to a github account). I had trouble
 using the swarthmore github, so I used a private account. This may include installing the python 2.7, which 
-will 
+will be installed in the lib folder in the environment.
 
 To set up my httpd django configuration, I added the fallowing to the django.conf file in the 
 httpd config folder
