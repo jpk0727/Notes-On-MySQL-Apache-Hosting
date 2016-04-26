@@ -43,11 +43,11 @@ the MySQL workbench IDE from the internet and use this tool to run the same comm
 and execute SQL statements. I will breifly explane some usefull parts of the 
 python library. You will need to isntall the python package manager (pip) on 
 the machine you are using if it is not already.
-    - Install MySQL-python
+- Install MySQL-python
 
     sudo pip install MySQL-python
 
-    - Establishing a connection: place the following code at the top of a 
+- Establishing a connection: place the following code at the top of a 
     python script.
 ```python
     db = MySQLdb.connect(host="fubini.swarthmore.edu",
@@ -57,7 +57,7 @@ the machine you are using if it is not already.
         db="grow")
     cur = db.cursor()
 ```
-    - Execute a simple select statement.
+- Execute a simple select statement.
 
 ```python
     sql = "select * from dbname.table"
@@ -65,7 +65,7 @@ the machine you are using if it is not already.
     if (num_rows > 0):
         data= cur.fetchall()
 ```
-    - Execute a simple insert statement
+- Execute a simple insert statement
 
 ```python
     sql = "insert into dbname.table (var1, var2) values (%(var1)s,%(var2))"
@@ -143,8 +143,9 @@ The first steps in serving the website are creating a virtual environment on the
 contain all the dependencies for the web application. To create a new environment run the following command
 on the server.
 
-```>> virtualenv projectname
-```
+    ```
+    virtualenv projectname
+    ```
 
 cd into the newly created folder and then activate the shell for the environment. This will allow you to install
 dependencies into the environment without them also installed on the rest of the machine. Interesting but importantly,
@@ -152,14 +153,16 @@ the fubini server is already a virtual server, so we are creating a virtual envi
 activate the virtual shell, however, we must make sure we are first using the python 2.7 which is required for 
 the Django application. 
 
-```
->> scl enable python27 bash
->> python -V
-```
+    ```
+    scl enable python27 bash
+    python -V
+    ```
+
 If the last command shows python 2.7 then you are now using the correct version.
-```
->> source /bin/activate
-```
+
+    ```
+    source /bin/activate
+    ```
 Now clone you Django webapp repo from github and install all the required dependenices. (This is assuming
 you developed the web app on another computer and saved the code to a github accound). I had trouble
 using the swarthmore github, so I used a private account. 
@@ -167,25 +170,25 @@ using the swarthmore github, so I used a private account.
 To set up my httpd django configuration, I added the fallowing to the django.conf file in the 
 httpd config folder
 
-```
-alias /static /home/jess/growEnv/growApp/grow/static
-<Directory /home/jess/growEnv/growApp/grow/static>
-    order allow,deny
-    allow from all
-</Directory>
-
-<Directory /home/jess/growEnv/growApp/grow>
-    <Files wsgi.py>
+    ```
+    alias /static /home/jess/growEnv/growApp/grow/static
+    <Directory /home/jess/growEnv/growApp/grow/static>
         order allow,deny
         allow from all
-    </Files>
-</Directory>
+    </Directory>
 
-WSGIDaemonProcess grow python-path=/home/jess/growEnv/growApp:/home/jess/growEnv/lib/python2.7/site-packages
-WSGIProcessGroup grow
-WSGIScriptAlias /grow /home/jess/growEnv/growApp/grow/wsgi.py
-WSGISocketPrefix /var/run/wsgi
-```
+    <Directory /home/jess/growEnv/growApp/grow>
+        <Files wsgi.py>
+            order allow,deny
+            allow from all
+        </Files>
+    </Directory>
+
+    WSGIDaemonProcess grow python-path=/home/jess/growEnv/growApp:/home/jess/growEnv/lib/python2.7/site-packages
+    WSGIProcessGroup grow
+    WSGIScriptAlias /grow /home/jess/growEnv/growApp/grow/wsgi.py
+    WSGISocketPrefix /var/run/wsgi
+    ```
 
 You may need to modify or add to this for a different Django project. Notice, we are not using the native python library,
 but the python library that is installed within the virtual env. 
