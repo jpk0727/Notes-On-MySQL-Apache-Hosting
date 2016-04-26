@@ -1,6 +1,7 @@
 # Notes-On-MySQL-Apache-Hosting
 
-This repository is to hold notes for the Swarthmore Department of Engineering on how to use the CentOS server to host a database and serve a web application suing Apache. This project was created after Jess Karol and Connie Bowen figured out these tools for their E90. 
+This repository is to hold notes for the Swarthmore Department of Engineering on how to use the CentOS server to host a database and serve a web application suing Apache. This project was created by Jess Karol after he figured out how to use these tools for their E90. Feel free to contribute more instructions to this page to 
+record information so future engineers have an easier time. 
 
 ## MySQL ##
 - Start mysql from command line. Either an existing user or the root account can
@@ -76,7 +77,7 @@ the machine you are using if it is not already.
     cur.execute(sql, values)
     db.commit()
 ```
-    - close database connection when done
+- close database connection when done
 
 ```python
     db.close()
@@ -143,9 +144,7 @@ The first steps in serving the website are creating a virtual environment on the
 contain all the dependencies for the web application. To create a new environment run the following command
 on the server.
 
-    ```
     virtualenv projectname
-    ```
 
 cd into the newly created folder and then activate the shell for the environment. This will allow you to install
 dependencies into the environment without them also installed on the rest of the machine. Interesting but importantly,
@@ -153,16 +152,13 @@ the fubini server is already a virtual server, so we are creating a virtual envi
 activate the virtual shell, however, we must make sure we are first using the python 2.7 which is required for 
 the Django application. 
 
-    ```
     scl enable python27 bash
     python -V
-    ```
 
 If the last command shows python 2.7 then you are now using the correct version.
 
-    ```
     source /bin/activate
-    ```
+
 Now clone you Django webapp repo from github and install all the required dependenices. (This is assuming
 you developed the web app on another computer and saved the code to a github accound). I had trouble
 using the swarthmore github, so I used a private account. 
